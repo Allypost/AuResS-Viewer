@@ -1,0 +1,27 @@
+# Global
+*.DS_Store
+
+# IDE
+/.idea/
+
+# Settings
+.env
+
+# Cache files
+/.*-cache/
+/.vagrant/
+
+# Dynamic files
+/bower_components
+/captchatmp/**
+/logs/**
+/node_modules/
+/vendor/
+/public/css/*.min.css
+/public/css/*.min.css.map
+/public/js/*.min.js
+
+# Do not ignore these files
+# Root
+!.gitignore
+!/logs/README.md
