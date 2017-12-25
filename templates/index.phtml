@@ -1,12 +1,17 @@
 <!doctype html>
 <html lang="hr">
     <head>
-        <?php require_once 'parts/head.phtml'?>
+        <?php require_once 'parts/head.phtml' ?>
         <link rel="stylesheet" href="/css/index.min.css?__t=<?= microtime(true) ?>">
 
         <title>AuResS room viewer</title>
     </head>
     <body>
-
+        <div class="index-container">
+            <form action="<?= $data['postRoute'] ?>" method="post">
+                <label for="room-id">Room ID:</label><input type="number" name="room" id="room-id">
+                <input type="submit" value="Show">
+            </form>
+        </div>
     </body>
 </html>
