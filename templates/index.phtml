@@ -1,38 +1,22 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="hr">
     <head>
-        <meta charset="utf-8"/>
-        <title>Slim 3</title>
-        <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
-        <style>
-            body {
-                margin: 50px 0 0 0;
-                padding: 0;
-                width: 100%;
-                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-                text-align: center;
-                color: #aaa;
-                font-size: 18px;
-            }
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-            h1 {
-                color: #719e40;
-                letter-spacing: -3px;
-                font-family: 'Lato', sans-serif;
-                font-size: 100px;
-                font-weight: 200;
-                margin-bottom: 0;
-            }
-        </style>
+        <meta name="author" content="Josip Igrec">
+        <meta name="theme-color" content="#1E1E1E">
+        <meta name="application-name" content="AuResS Viewer - View AuResS room data"/>
+        <meta name="msapplication-TileColor" content="#1E1E1E">
+        <meta name="theme-color" content="#232323">
+
+        <link rel="stylesheet" href="/css/index.min.css?__t={{ 'now' | date('Y-m-d_h-i-s.u') }}">
+
+        <title>AuResS room viewer</title>
     </head>
     <body>
-        <h1>Slim</h1>
-        <div>a microframework for PHP</div>
 
-        <?php if (isset($name)) : ?>
-            <h2>Hello <?= htmlspecialchars($name); ?>!</h2>
-        <?php else: ?>
-            <p>Try <a href="http://www.slimframework.com">SlimFramework</a></p>
-        <?php endif; ?>
     </body>
 </html>
