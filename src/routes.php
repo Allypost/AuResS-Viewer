@@ -6,15 +6,8 @@ use Slim\Http\Response;
 // Routes
 
 $app->get('/', function (Request $request, Response $response, array $args) {
-    /**
-     * @var \Slim\Router $router ;
-     */
-    $router = $this->router;
-
-    $postRoute = $router->pathFor('room:join.post');
-
     // Render index view
-    return $this->renderer->render($response, 'index.phtml', compact('args', 'postRoute'));
+    return $this->view->render($response, 'pages/index.twig', $args);
 });
 
 $app->post('/join', function (Request $request, Response $response, array $args) {

@@ -1,0 +1,22 @@
+{% extends 'skeletons/bare.twig' %}
+
+{% block bare_title %}{% block title %}{% endblock title %}{% endblock bare_title %}
+
+{% block bare_head %}{% block head %}{% endblock head %}{% endblock bare_head %}
+
+{% block bare_body %}
+    <ul id="error-msg">
+        {% for msgs in flash() %}
+            {% for msg in msgs %}
+                <li>{{ msg }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+    <div class="container">
+        {% block body %}<h1>404: Page not found...</h1>{% endblock %}
+    </div>
+
+    <footer>
+        {% block footer %}{% endblock %}
+    </footer>
+{% endblock bare_body %}

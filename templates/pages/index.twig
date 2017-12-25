@@ -1,0 +1,16 @@
+{% extends 'skeletons/main.twig' %}
+
+{% block title %}AuResS Viewer - Join Room{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="/css/index.min.css?__t={{ 'now' | date('Y-m-d_h-i-s.u') }}">
+{% endblock head %}
+
+{% block body %}
+    <div class="index-container">
+        <form action="{{ path_for('room:join.post') }}" method="POST">
+            <label for="room-id">Room ID:</label><input type="number" name="room" id="room-id">
+            <input type="submit" value="Show">
+        </form>
+    </div>
+{% endblock body %}

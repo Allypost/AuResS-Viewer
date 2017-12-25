@@ -1,0 +1,13 @@
+{% spaceless %}
+    <!doctype html>
+    <html lang="en">
+        <head>
+            {% include 'parts/head.twig' %}
+            <title>{% block bare_title %}AuResS Viewer - View AuResS room data{% endblock bare_title %}</title>
+            {% block bare_head %}{% endblock bare_head %}
+        </head>
+        <body>
+            {% block bare_body %}{% endblock bare_body %}
+        </body>
+    </html>
+{% endspaceless %}
