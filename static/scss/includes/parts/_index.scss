@@ -1,0 +1,35 @@
+@import "../include";
+
+::selection {
+    background  : map-get($main-selection, 'background');
+    color       : map-get($main-selection, 'text');
+    text-shadow : 0 1px 4px #424242;
+}
+
+* {
+    outline : none;
+}
+
+html {
+    //noinspection CssUnknownTarget
+    background   : $main-bg url('/images/bg.png');
+    color        : $main-text;
+    font-family  : $main-fonts;
+    font-variant : normal;
+    font-style   : normal;
+    font-size    : 1.2em;
+}
+
+a:not(.no-link-style) {
+    color      : $main-link;
+    transition : color .3s #{$transition-smooth};
+    @include link-underline($main-bg, $main-text, map-get($main-selection, 'background'));
+
+    &:hover {
+        $main-text-hover : darken($main-text, 12%);
+
+        color : $main-text-hover;
+        @include text-underline($main-bg, $main-text-hover);
+    }
+
+}
