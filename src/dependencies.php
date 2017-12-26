@@ -2,6 +2,7 @@
 
 use Psr\Container\ContainerInterface;
 use Slim\Flash\Messages;
+use Slim\Http\Cookies;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 use Slim\Csrf\Guard;
@@ -17,6 +18,16 @@ $container['csrf'] = function (): Guard {
 
 $container['flash'] = function () {
     return new Messages;
+};
+
+$container['cookie'] = function (ContainerInterface $container) {
+    /**
+     * @var \Slim\Http\Request $request;
+     */
+
+    $request = $container->get('request');
+
+    return new Cookies($request->getCookieParams());
 };
 
 $container['view'] = function (ContainerInterface $container) {
