@@ -20,6 +20,7 @@
 /public/css/*.min.css
 /public/css/*.min.css.map
 /public/js/*.min.js
+/public/images/
 
 # Do not ignore these files
 # Root
