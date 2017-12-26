@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&subset=latin-ext');
+
 // Media Query Ranges
 $small-screen : 752px !default;
 $medium-screen : 1012px !default;
@@ -13,7 +15,7 @@ $main-bg : #212121;
 $main-text : #fafafa;
 $main-link : #fafafa;
 $main-colour : #9c27b0;
-$main-fonts : "Helvetica Neue", Helvetica, Arial, sans-serif;
+$main-fonts : "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $main-selection : (
         "background": #546e7a,
         "text": #eceff1,
