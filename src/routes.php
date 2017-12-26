@@ -1,5 +1,6 @@
 <?php
 
+use Allypost\Api\Output;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -21,5 +22,8 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 $app->post('/join', function (Request $request, Response $response, array $args) {
     $room = (int)$request->getParam('room');
 
-    return \Allypost\Api\Output::say($response, 'room join', compact('room'));
+    if ($room < 0 || $room > 9999)
+        return Output::err($response, 'room join', ['Invalid room number supplied']);
+
+    return Output::say($response, 'room join', compact('room'));
 })->setName('room:join.post')->add($csrf);
