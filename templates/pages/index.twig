@@ -11,7 +11,7 @@
     <div class="index-container">
         <form action="{{ path_for('room:join.post') }}" method="POST">
             <div class="input-container">
-                <input type="number" min="0" max="9999" name="room" id="room-id" required>
+                <input type="number" min="0" max="9999" onkeypress="return isValid(this.value)" name="room" id="room-id" required>
                 <label for="room-id">Room ID</label>
             </div>
             <div class="input-container">
@@ -20,5 +20,12 @@
             <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
             <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
         </form>
+        <script>
+            function isValid(num) {
+                return num.length < 4
+                    && +num >= 0
+                    && +num == num;
+            }
+        </script>
     </div>
 {% endblock body %}
