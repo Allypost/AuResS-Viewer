@@ -9,8 +9,13 @@
 {% block body %}
     <div class="index-container">
         <form action="{{ path_for('room:join.post') }}" method="POST">
-            <label for="room-id">Room ID</label><input type="number" name="room" id="room-id">
-            <input type="submit" value="Show">
+            <div class="input-container">
+                <input type="number" name="room" id="room-id" required>
+                <label for="room-id">Room ID</label>
+            </div>
+            <div class="input-container">
+                <input type="submit" value="Show">
+            </div>
         </form>
     </div>
 {% endblock body %}
