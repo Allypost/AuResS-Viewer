@@ -1,0 +1,74 @@
+@import "../include";
+
+.container {
+
+    .index-container {
+        $border-radius : 8px;
+
+        position  : absolute;
+        top       : 50%;
+        left      : 50%;
+        font-size : 70px;
+        padding   : 1.2em .2em;
+        transform : translate(-50%, -50%);
+
+        form {
+            border-radius : $border-radius;
+            box-shadow    : 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-container {
+            position : relative;
+
+            input {
+                display    : block;
+                width      : 6em;
+                padding    : .2em .5em;
+                text-align : center;
+                border     : none;
+            }
+
+            label {
+                position       : absolute;
+                pointer-events : none;
+                left           : .25em;
+                top            : .2em;
+                color          : $main-bg;
+                transition     : .15s ease top, .15s ease left, .15s ease color;
+            }
+
+            input[type=number] {
+                border-radius : #{$border-radius} #{$border-radius} 0 0;
+
+                &:focus,
+                &:valid {
+
+                    & ~ label {
+                        top   : -1.1em;
+                        left  : -.05em;
+                        color : $main-text;
+                    }
+
+                }
+
+            }
+
+            input[type=submit] {
+                width            : 100%;
+                background-color : $main-colour;
+                color            : $main-text;
+                font-size        : .69em;
+                cursor           : pointer;
+                border-radius    : 0 0 #{$border-radius} #{$border-radius};
+
+                &:hover {
+                    background-color : darken($main-colour, 10%);
+                }
+
+            }
+
+        }
+
+    }
+
+}
