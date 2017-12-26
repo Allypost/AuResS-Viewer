@@ -17,6 +17,8 @@
             <div class="input-container">
                 <input type="submit" value="Show">
             </div>
+            <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
+            <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
         </form>
     </div>
 {% endblock body %}
