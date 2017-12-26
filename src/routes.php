@@ -20,9 +20,25 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 })->setName('room:join')->add($csrf);
 
 $app->get('/{room:\d{4}}', function (Request $request, Response $response, array $args) {
-    $room = (int)$args['room'];
+    $room = $args['room'];
 
-    return Output::say($response, 'room join', compact('room'));
+    $opts = [
+        'http' => [
+            'method' => "GET",
+            'header' => "Host: www.auress.org\r\n" .
+                        "User-Agent: Auress-Viewer-Bot\r\n" .
+                        "Accept: text/html\r\n",
+        ],
+    ];
+    $url = sprintf('http://www.auress.org/graf.php?brOdgovora=999&all=1&soba=%s', $room);
+
+    $roomData = file_get_contents($url, false, stream_context_create($opts)) ?? '';
+    $roomData = explode(',', $roomData);
+    $roomData = array_map(function ($el) {
+        return (int)$el;
+    }, $roomData);
+
+    return Output::say($response, 'room join', compact('room', 'roomData'));
 })->setName('room:view');
 
 $app->post('/join', function (Request $request, Response $response, array $args) {
@@ -47,7 +63,7 @@ $app->post('/join', function (Request $request, Response $response, array $args)
         'secure' => true,
         'httponly' => true,
         'path' => '/',
-        'host' => $request->getServerParam('SERVER_NAME')
+        'host' => $request->getServerParam('SERVER_NAME'),
     ]);
 
     return $response
