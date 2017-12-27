@@ -13,6 +13,7 @@
         color       : #9c27b0;
         text-shadow : 1px 1px 2px #000000, 0 0 1px #000000, 1px 1px 8px rgba(0, 0, 0, .5);
         transition  : .3s ease font-size;
+        @include no-select();
 
         @media #{$small-and-down} {
             font-size : 70px;
