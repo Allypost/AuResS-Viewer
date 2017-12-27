@@ -29,9 +29,10 @@ class Room
     public static function get(string $roomID, string $type = 'all', ?RedisClient $redis = null): array
     {
         $roomData = null;
+        $roomKey = "Room:{$type}:{$roomID}";
 
         if ($redis) {
-            $roomData = $redis->get("Room:{$roomID}");
+            $roomData = $redis->get($roomKey);
             $roomData = json_decode($roomData, true);
         }
 
@@ -40,7 +41,7 @@ class Room
 
             if ($redis) {
                 // Push the data to Redis for caching (1s cache)
-                $redis->set("Room:{$roomID}", json_encode($roomData), 1);
+                $redis->set($roomKey, json_encode($roomData), 1);
             }
         }
 
