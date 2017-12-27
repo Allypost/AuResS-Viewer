@@ -58,7 +58,6 @@ class Room
      */
     public static function getData(string $roomID, string $type = 'all'): array
     {
-
         $url = self::getURL($roomID, $type);
         $opts = self::OPTS;
 
@@ -95,6 +94,7 @@ class Room
     {
         $first = false;
         $all = false;
+        $text = false;
 
         switch ($type) {
             case 'last':
@@ -102,13 +102,16 @@ class Room
             case 'first':
                 $first = true;
                 break;
+            case 'text':
+                $text = true;
+                break;
             case 'all':
             default:
                 $all = true;
                 break;
         }
 
-        return compact('all', 'first', 'roomID');
+        return compact('all', 'first', 'roomID', 'text');
     }
 
     /**
@@ -122,13 +125,21 @@ class Room
     {
         $url = static::URL;
 
+        $isText = $params['text'] ?? false;
+
         $args = [
             $params['all'] ?? 0,
             $params['first'] ?? 0,
             $params['roomID'] ?? '',
         ];
 
-        return sprintf($url, ...$args);
+        $return = sprintf($url, ...$args);
+
+        if ($isText) {
+            return $return . '&text';
+        }
+
+        return $return;
     }
 
     /**
