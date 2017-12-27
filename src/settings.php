@@ -6,6 +6,9 @@ $Loader = (new josegonzalez\Dotenv\Loader(__DIR__ . '/../.env'))
     // Send the parsed .env file to the $_ENV variable
     ->toEnv();
 
+$_ENV['REDIS_HOST'] = $_ENV['REDIS_HOST'] ?? '127.0.0.1';
+$_ENV['REDIS_PORT'] = $_ENV['REDIS_PORT'] ?? '6379';
+
 return [
     'settings' => [
         'determineRouteBeforeAppMiddleware' => true,
@@ -38,6 +41,13 @@ return [
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => $_ENV['DB_PREFIX'] ?? '',
+        ],
+
+        'redis' => [
+            'server' => "{$_ENV['REDIS_HOST']}:{$_ENV['REDIS_PORT']}",
+            'password' => $_ENV['REDIS_PASSWORD'],
+            'version' => $_ENV['REDIS_VERSION'],
+            'database' => (int) $_ENV['REDIS_DB'],
         ],
     ],
 ];
