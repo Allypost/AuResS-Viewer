@@ -1,6 +1,7 @@
 <?php
 
 use Allypost\Api\Output;
+use Allypost\Api\Room;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -26,23 +27,15 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 })->setName('room:join')->add($csrf);
 
 $app->get('/{room:\d{4}}', function (Request $request, Response $response, array $args) {
+    /**
+     * @var \Slim\Container $this
+     * @var \Slim\Container $settings
+     */
+    $settings = $this->get('settings');
+    $redis = new \RedisClient\RedisClient($settings->get('redis'));
     $room = $args['room'];
 
-    $opts = [
-        'http' => [
-            'method' => "GET",
-            'header' => "Host: www.auress.org\r\n" .
-                        "User-Agent: Auress-Viewer-Bot\r\n" .
-                        "Accept: text/html\r\n",
-        ],
-    ];
-    $url = sprintf('http://www.auress.org/graf.php?brOdgovora=999&all=1&soba=%s', $room);
-
-    $roomData = file_get_contents($url, false, stream_context_create($opts)) ?? '';
-    $roomData = explode(',', $roomData);
-    $roomData = array_map(function ($el) {
-        return (int) $el;
-    }, $roomData);
+    $roomData = Room::get($room, 'all', $redis);
 
     return Output::say($response, 'room join', compact('room', 'roomData'));
 })->setName('room:view');
