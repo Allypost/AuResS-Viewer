@@ -10,11 +10,11 @@
     <h1 id="header">AuResS Viewer</h1>
     <div class="index-container">
         <form action="{{ path_for('room:join.post') }}" method="POST">
-            <div class="input-container">
+            <div class="input-container" style="z-index: 5">
                 <input type="number" min="0" max="9999" onkeypress="return isValid(this.value)" name="room" id="room-id" required value="{{ room }}">
                 <label for="room-id">Room ID</label>
             </div>
-            <div class="input-container">
+            <div class="input-container" style="z-index: 4">
                 <input type="submit" value="Show">
             </div>
             <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
