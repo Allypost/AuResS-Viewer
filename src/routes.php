@@ -35,23 +35,23 @@ $app->get('/{room:\d{4}}', function (Request $request, Response $response, array
     $roomData = file_get_contents($url, false, stream_context_create($opts)) ?? '';
     $roomData = explode(',', $roomData);
     $roomData = array_map(function ($el) {
-        return (int)$el;
+        return (int) $el;
     }, $roomData);
 
     return Output::say($response, 'room join', compact('room', 'roomData'));
 })->setName('room:view');
 
 $app->post('/join', function (Request $request, Response $response, array $args) {
-    $room = (int)$request->getParam('room');
+    $room = (int) $request->getParam('room');
 
     if ($room < 0 || $room > 9999) {
         return Output::err($response, 'room join', ['Invalid room number supplied']);
     }
 
-    $paddedRoom = str_pad((string)$room, 4, '0', STR_PAD_LEFT);
+    $paddedRoom = str_pad((string) $room, 4, '0', STR_PAD_LEFT);
 
     /**
-     * @var \Slim\Router $router
+     * @var \Slim\Router       $router
      * @var \Slim\Http\Cookies $cookie
      */
     $router = $this->router;

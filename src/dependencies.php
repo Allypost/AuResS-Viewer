@@ -22,7 +22,7 @@ $container['flash'] = function () {
 
 $container['cookie'] = function (ContainerInterface $container) {
     /**
-     * @var \Slim\Http\Request $request;
+     * @var \Slim\Http\Request $request
      */
 
     $request = $container->get('request');
@@ -42,9 +42,11 @@ $container['view'] = function (ContainerInterface $container) {
 
     $view->addExtension(new TwigExtension($container['router'], $basePath));
     $view->addExtension(new CsrfExtension($container['csrf']));
-    $view->addExtension(new Knlv\Slim\Views\TwigMessages(
-        new Slim\Flash\Messages()
-    ));
+    $view->addExtension(
+        new Knlv\Slim\Views\TwigMessages(
+            new Slim\Flash\Messages()
+        )
+    );
 
     return $view;
 };

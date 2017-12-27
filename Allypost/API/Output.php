@@ -6,6 +6,7 @@ use Slim\Http\Response;
 
 /**
  * Class Output
+ *
  * @package Allypost\Api
  */
 class Output
@@ -78,14 +79,14 @@ class Output
             return ord($error);
         }
 
-        $err = (int)array_reduce(str_split($error), function ($i, $char) {
+        $err = (int) array_reduce(str_split($error), function ($i, $char) {
             return $i ^ ord($char);
         }, 500);
 
         $err *= strlen($error);
         $err ^= ord(substr($error, 0, 1));
         $err ^= ord(substr($error, -1, 1));
-        $err ^= ord(substr($error, (int)strlen($error) / 2, 1));
+        $err ^= ord(substr($error, (int) strlen($error) / 2, 1));
 
         return $err;
     }
