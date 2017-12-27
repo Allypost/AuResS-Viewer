@@ -26,7 +26,7 @@ $app->get('/', function (Request $request, Response $response, array $args) {
     return $this->view->render($response, 'pages/index.twig', compact('room'));
 })->setName('room:join')->add($csrf);
 
-$app->get('/{room:\d{4}}', function (Request $request, Response $response, array $args) {
+$app->get('/{room:\d{4}}/[{type}]', function (Request $request, Response $response, array $args) {
     /**
      * @var \Slim\Container $this
      * @var \Slim\Container $settings
@@ -34,8 +34,9 @@ $app->get('/{room:\d{4}}', function (Request $request, Response $response, array
     $settings = $this->get('settings');
     $redis = new \RedisClient\RedisClient($settings->get('redis'));
     $room = $args['room'];
+    $type = $args['type'] ?? 'last';
 
-    $roomData = Room::get($room, 'all', $redis);
+    $roomData = Room::get($room, $type, $redis);
 
     return Output::say($response, 'room join', compact('room', 'roomData'));
 })->setName('room:view');
