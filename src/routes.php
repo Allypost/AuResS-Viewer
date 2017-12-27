@@ -15,8 +15,14 @@ $container = $app->getContainer();
 $csrf = $container->get('csrf');
 
 $app->get('/', function (Request $request, Response $response, array $args) {
-    // Render index view
-    return $this->view->render($response, 'pages/index.twig', $args);
+    /**
+     * @var \Slim\Http\Cookies $cookie
+     */
+    $cookie = $this->cookie;
+
+    $room = $cookie->get('room-number', null);
+
+    return $this->view->render($response, 'pages/index.twig', compact('room'));
 })->setName('room:join')->add($csrf);
 
 $app->get('/{room:\d{4}}', function (Request $request, Response $response, array $args) {
