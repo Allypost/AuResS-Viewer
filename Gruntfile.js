@@ -27,6 +27,10 @@ module.exports = grunt => {
         'public/css/view.min.css': 'static/scss/view.scss'
     };
 
+    const copyFiles = {
+        'public/js/chart.min.js': 'static/js/jscharts.js'
+    };
+
     const gruntConfig = {
         sass: {
             dist: {
@@ -142,6 +146,36 @@ module.exports = grunt => {
     grunt.loadNpmTasks('grunt-google-closure-tools-compiler');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
 
+    grunt.task.registerTask('copy', 'Simply copy files over without any modifications', function () {
+        let test = 0;
+
+        const arr = Object.entries(copyFiles);
+        const done = this.async();
+
+        if (arr.length === 0) {
+            grunt.log.writeln(`No files to copy...`);
+            return done(true);
+        }
+
+        arr.forEach(([dest, src], i) => {
+            test ^= i + 1;
+
+            const write = fs.createWriteStream(dest);
+
+            write.on('close', () => {
+                test ^= i + 1;
+
+                grunt.log.writeln(`Moved \`${src}\` to \`${dest}\``);
+
+                if (test === 0)
+                    done(true);
+            });
+
+            fs.createReadStream(src)
+              .pipe(write);
+        });
+    });
+
     grunt.task.registerTask('cleanup', 'Clean up after tasks', function () {
         let test = 0;
 
@@ -172,5 +206,5 @@ module.exports = grunt => {
     });
 
     //grunt.registerTask('default', [ 'sass', 'postcss', 'closurecompiler', 'javascript_obfuscator', 'cleanup', 'imagemin' ]);
-    grunt.registerTask('default', ['sass', 'postcss', 'closurecompiler', 'cleanup', 'imagemin']);
+    grunt.registerTask('default', ['sass', 'postcss', 'closurecompiler', 'cleanup', 'copy', 'imagemin']);
 };
