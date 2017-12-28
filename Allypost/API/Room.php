@@ -6,6 +6,10 @@ use RedisClient\RedisClient;
 
 class Room
 {
+    public const ANSWER_TYPES = ['first', 'last', 'all'];
+    public const TEXT_TYPES = ['text'];
+    public const TYPES = ['first', 'last', 'all', 'text'];
+
     private const OPTS = [
         'http' => [
             'method' => "GET",
