@@ -80,6 +80,13 @@ module.exports = grunt => {
                 options: {
                     spawn: true
                 }
+            },
+            copy: {
+                files: ['static/**/*'],
+                tasks: ['copy'],
+                options: {
+                    spawn: true
+                }
             }
         },
         imagemin: {
