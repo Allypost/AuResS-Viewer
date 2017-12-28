@@ -24,7 +24,7 @@ class Room
      * @param string           $type   - Type of data (one of: all, first, last)
      * @param null|RedisClient $redis  - The Redis client
      *
-     * @return integer[] - List of integers representing numbers of responses for each option
+     * @return array - The answers for the room given by $type
      */
     public static function get(string $roomID, string $type = 'all', ?RedisClient $redis = null): array
     {
@@ -54,7 +54,7 @@ class Room
      * @param string $roomID - The ID of the room to fetch data from (zero padded integer of length 4)
      * @param string $type   - Type of data (one of: all, first, last)
      *
-     * @return integer[] - List of integers representing numbers of responses for each option
+     * @return array - The answers for the room given by $type
      */
     public static function getData(string $roomID, string $type = 'all'): array
     {
@@ -64,7 +64,8 @@ class Room
         // Get the raw contents from the remote host (in the form of a comma separated list)
         $roomData = file_get_contents($url, false, stream_context_create($opts)) ?? '';
 
-        return self::processData($roomData);
+        // Return processed data
+        return self::processData($roomData, $type === 'text');
     }
 
     /**
@@ -146,10 +147,27 @@ class Room
      * Process the raw data fetched from the remote API
      *
      * @param string $roomData - Raw data fetched from the API (comma separated list)
+     * @param bool   $isText   - Whether the room data are the text responses
      *
      * @return integer[] - Processed data
      */
-    private static function processData(string $roomData): array
+    private static function processData(string $roomData, bool $isText): array
+    {
+        if ($isText) {
+            return self::processText($roomData);
+        } else {
+            return self::processAnswers($roomData);
+        }
+    }
+
+    /**
+     * Process button answer data from remote API
+     *
+     * @param $roomData
+     *
+     * @return array
+     */
+    protected static function processAnswers($roomData): array
     {
         // Explode the list into an array
         $data = explode(',', $roomData);
@@ -158,5 +176,29 @@ class Room
         return array_map(function ($el) {
             return (int) $el;
         }, $data);
+    }
+
+    /**
+     * Process raw text answer data from remote API
+     *
+     * @param $roomData
+     *
+     * @return array
+     */
+    protected static function processText($roomData): array
+    {
+        $data = str_replace("\r", '', $roomData);
+
+        // Replace line breaks with tabs
+        $data = str_replace("\n", "\t", $data);
+
+        // Add newlines after IDs
+        $data = preg_replace("/\t([a-z]{3}[0-9A-Z]{5}):/", "\n$1:", $data);
+
+        // Trim data of excessive whitespace
+        $data = trim($data);
+
+        // Explode data into array on newlines
+        return explode("\n", $data);
     }
 }
