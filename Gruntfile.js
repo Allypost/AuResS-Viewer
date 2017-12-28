@@ -27,9 +27,7 @@ module.exports = grunt => {
         'public/css/view.min.css': 'static/scss/view.scss'
     };
 
-    const copyFiles = {
-        'public/js/chart.min.js': 'static/js/jscharts.js'
-    };
+    const copyFiles = {};
 
     const gruntConfig = {
         sass: {
