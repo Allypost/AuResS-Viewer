@@ -1,1 +1,51 @@
 @import "../../include";
+
+.container {
+    font-size : 25px;
+
+    .header {
+        display       : block;
+        font-size     : 2em;
+        text-align    : center;
+        margin-bottom : 0;
+
+        @include no-select();
+    }
+
+    .answer-info {
+        display    : block;
+        text-align : center;
+        margin     : 0;
+        opacity    : .8;
+
+        @include no-select();
+    }
+
+    .type-links {
+        display    : block;
+        list-style : none;
+        padding    : 0;
+        text-align : center;
+        margin-top : .25em;
+
+        li {
+            display : inline-block;
+            padding : .25em .5em;
+
+            span {
+                @include no-select();
+                font-weight : bold;
+            }
+
+        }
+
+    }
+
+    .plot-container {
+        position : relative;
+        height   : 60vh;
+        width    : 80vw;
+        margin   : 0 auto;
+    }
+
+}

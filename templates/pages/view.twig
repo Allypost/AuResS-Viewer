@@ -5,16 +5,37 @@
 {% block head %}
     <link rel="stylesheet" href="/css/view.min.css?__t={{ 'now' | date('Y-m-d_H:i:s.u') }}">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"
-            integrity="sha256-CIc5A981wu9+q+hmFYYySmOvsA3IsoX+apaYlL0j6fg=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" integrity="sha256-c0m8xzX5oOBawsnLVpHnU2ieISOvxi584aNElFl2W6M="
+            crossorigin="anonymous"></script>
     <script src="/js/view.min.js?__t={{ 'now' | date('Y-m-d_H:i:s.u') }}"></script>
 {% endblock head %}
 
+{% set types = [ "first", "last", "all" ] %}
+
 {% block body %}
-    <h1>Room: {{ room }}</h1>
-    <h3>{{ type }} answer</h3>
-    <div id="plot" style="height: 80vh; width: 100%;"></div>
+    <h1 class="header">Room: {{ room }}</h1>
+    <h3 class="answer-info">{{ type | capitalize }} answers</h3>
+    <ul class="type-links">
+        <li><span>Choose answers:</span></li>
+        {% for t in types %}
+            {% if t == type %}
+                <li><span>{{ t | capitalize }}</span></li>
+            {% else %}
+                <li><a href="{{ path_for("room:view", { "room": room, "type": t }) }}">{{ t | capitalize }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <div class="plot-container">
+        <canvas id="plot"></canvas>
+    </div>
     <script>
-        var chart = ChartVM({{ data | json_encode }});
+        ChartVM(
+            {
+                'data': {{ data | json_encode }},
+                'dataURL': '{{ path_for("api:room:mock", { "room": room, "type": type }) }}',
+                'type': 'bar',
+                'id': 'plot'
+            }
+        );
     </script>
 {% endblock body %}
