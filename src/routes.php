@@ -36,9 +36,9 @@ $app->get('/{room:\d{4}}/[{type}]', function (Request $request, Response $respon
     $room = $args['room'];
     $type = $args['type'] ?? 'last';
 
-    $roomData = Room::get($room, $type, $redis);
+    $data = Room::get($room, $type, $redis);
 
-    return Output::say($response, 'room join', compact('room', 'roomData'));
+    return $this->view->render($response, 'pages/view.twig', compact('room', 'type', 'data'));
 })->setName('room:view');
 
 $app->post('/join', function (Request $request, Response $response, array $args) {

@@ -17,6 +17,9 @@ module.exports = grunt => {
         'public/js/index.min.js': [
             'static/js/index.js',
         ],
+        'public/js/view.min.js': [
+            'static/js/view.js',
+        ],
     };
 
     const CssFileList = {
@@ -144,9 +147,9 @@ module.exports = grunt => {
 
         const done = this.async();
         const deleteFiles = Object.keys(JsFileList)
-                                  .map(el => {
-                                      return el + '.map';
-                                  });
+            .map(el => {
+                return el + '.map';
+            });
 
         if (deleteFiles.length === 0)
             return done(true);
