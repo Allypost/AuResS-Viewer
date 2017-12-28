@@ -8,8 +8,8 @@ use Slim\Http\Response;
 // Routes
 
 /**
- * @var \Slim\Container $container
- * @var Slim\Csrf\Guard $csrf
+ * @var \Slim\Container  $container
+ * @var \Slim\Csrf\Guard $csrf
  */
 
 $container = $app->getContainer();
