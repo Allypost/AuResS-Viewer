@@ -41,6 +41,37 @@ $app->get('/{room:\d{4}}/[{type}]', function (Request $request, Response $respon
     return $this->view->render($response, 'pages/view.twig', compact('room', 'type', 'data'));
 })->setName('room:view');
 
+$app->group('/api', function () {
+    /**
+     * @var \Slim\App $this
+     */
+
+    $this->get('/{room:\d{4}}/[{type}]', function (Request $request, Response $response, array $args) {
+        /**
+         * @var \Slim\Container $this
+         * @var \Slim\Container $settings
+         */
+        $settings = $this->get('settings');
+        $redis = new \RedisClient\RedisClient($settings->get('redis'));
+        $room = $args['room'];
+        $type = $args['type'] ?? 'last';
+
+        $data = Room::get($room, $type, $redis);
+
+        return Output::say($response, 'room data', compact('room', 'type', 'data'));
+    })->setName('api:room:data');
+
+    $this->get('/mock/[{type}]', function (Request $request, Response $response, array $args) {
+        $room = 'mock';
+        $type = $args['type'] ?? 'last';
+
+        $data = [random_int(0, 200), random_int(0, 200), random_int(0, 200), random_int(0, 200), random_int(0, 200)];
+
+        return Output::say($response, 'room data', compact('room', 'type', 'data'));
+    })->setName('api:room:mock');
+
+});
+
 $app->post('/join', function (Request $request, Response $response, array $args) {
     $room = (int) $request->getParam('room');
 
