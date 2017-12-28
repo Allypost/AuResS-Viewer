@@ -21,6 +21,7 @@ module.exports = grunt => {
 
     const CssFileList = {
         'public/css/index.min.css': 'static/scss/index.scss',
+        'public/css/view.min.css': 'static/scss/view.scss',
     };
 
     const gruntConfig = {
