@@ -32,7 +32,7 @@
         ChartVM(
             {
                 'data': {{ data | json_encode }},
-                'dataURL': '{{ path_for("api:room:mock", { "room": room, "type": type }) }}',
+                'dataURL': '{{ path_for("api:room:data", { "room": room, "type": type }) }}',
                 'type': 'bar',
                 'id': 'plot'
             }
