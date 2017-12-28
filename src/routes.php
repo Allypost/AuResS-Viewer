@@ -33,8 +33,15 @@ $app->get('/{room:\d{4}}/[{type}]', function (Request $request, Response $respon
      */
     $settings = $this->get('settings');
     $redis = new \RedisClient\RedisClient($settings->get('redis'));
+
+    $allowedTypes = Room::ANSWER_TYPES;
+
     $room = $args['room'];
     $type = $args['type'] ?? 'last';
+
+    if (!in_array($type, $allowedTypes)) {
+        $type = 'last';
+    }
 
     $data = Room::get($room, $type, $redis);
 
