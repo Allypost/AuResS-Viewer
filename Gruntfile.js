@@ -18,6 +18,7 @@ module.exports = grunt => {
             'static/js/index.js'
         ],
         'public/js/view.min.js': [
+            'static/js/jquery.js',
             'static/js/view.js'
         ]
     };
