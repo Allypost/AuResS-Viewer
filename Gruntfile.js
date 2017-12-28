@@ -1,7 +1,7 @@
 module.exports = grunt => {
     require('dotenv-safe').load(
         {
-            allowEmptyValues: true,
+            allowEmptyValues: true
         });
 
     const fs = require('fs');
@@ -15,26 +15,26 @@ module.exports = grunt => {
      */
     const JsFileList = {
         'public/js/index.min.js': [
-            'static/js/index.js',
+            'static/js/index.js'
         ],
         'public/js/view.min.js': [
-            'static/js/view.js',
-        ],
+            'static/js/view.js'
+        ]
     };
 
     const CssFileList = {
         'public/css/index.min.css': 'static/scss/index.scss',
-        'public/css/view.min.css': 'static/scss/view.scss',
+        'public/css/view.min.css': 'static/scss/view.scss'
     };
 
     const gruntConfig = {
         sass: {
             dist: {
                 options: {
-                    style: 'compressed',
+                    style: 'compressed'
                 },
-                files: CssFileList,
-            },
+                files: CssFileList
+            }
         },
         postcss: {
             options: {
@@ -43,23 +43,23 @@ module.exports = grunt => {
                     require('postcss-font-magician')({}),
                     require('pixrem')(),
                     require('autoprefixer')({browsers: '> 0.01%'}),
-                    require('cssnano')(),
-                ],
+                    require('cssnano')()
+                ]
             },
             dist: {
-                files: {},
-            },
+                files: {}
+            }
         },
         closurecompiler: {},
         javascript_obfuscator: {
             options: {
                 debugProtection: true,
                 debugProtectionInterval: true,
-                domainLock,
+                domainLock
             },
             main: {
-                files: {},
-            },
+                files: {}
+            }
         },
         watch: {
             scripts: {
@@ -67,16 +67,16 @@ module.exports = grunt => {
                 //tasks: [ 'closurecompiler', 'javascript_obfuscator', 'cleanup' ],
                 tasks: ['closurecompiler', 'cleanup'],
                 options: {
-                    spawn: true,
-                },
+                    spawn: true
+                }
             },
             styles: {
                 files: ['static/scss/**/*.scss'],
                 tasks: ['sass', 'postcss'],
                 options: {
-                    spawn: true,
-                },
-            },
+                    spawn: true
+                }
+            }
         },
         imagemin: {
             static: {
@@ -84,11 +84,11 @@ module.exports = grunt => {
                     optimizationLevel: 4,
                     svgoPlugins: [
                         {
-                            removeViewBox: false,
-                        },
+                            removeViewBox: false
+                        }
                     ],
                     use: [] // Example plugin usage
-                },
+                }
             },
             dynamic: {
                 files: [
@@ -96,11 +96,11 @@ module.exports = grunt => {
                         expand: true,
                         cwd: 'static/images/',
                         src: ['**/*.{png,jpg,jpeg,svg,gif}'],
-                        dest: 'public/images/',
-                    },
-                ],
-            },
-        },
+                        dest: 'public/images/'
+                    }
+                ]
+            }
+        }
     };
 
     if (process.env.AURESS_VIEWER_ENVIRONMENT === 'dev')
@@ -118,7 +118,7 @@ module.exports = grunt => {
         gruntConfig.closurecompiler[name] = {};
         gruntConfig.closurecompiler[name].options = {
             language_out: 'ECMASCRIPT5',
-            create_source_map: false,
+            create_source_map: false
         };
         gruntConfig.closurecompiler[name].files = {};
         gruntConfig.closurecompiler[name].files[final] = jsFiles;
@@ -147,9 +147,9 @@ module.exports = grunt => {
 
         const done = this.async();
         const deleteFiles = Object.keys(JsFileList)
-            .map(el => {
-                return el + '.map';
-            });
+                                  .map(el => {
+                                      return el + '.map';
+                                  });
 
         if (deleteFiles.length === 0)
             return done(true);
