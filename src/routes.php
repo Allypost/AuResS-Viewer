@@ -39,7 +39,7 @@ $app->get('/{room:\d{4}}/[{type}]', function (Request $request, Response $respon
     $data = Room::get($room, $type, $redis);
 
     return $this->view->render($response, 'pages/view.twig', compact('room', 'type', 'data'));
-})->setName('room:view');
+})->setName('room:view')->add($csrf);
 
 $app->group('/api', function () {
     /**
@@ -103,3 +103,27 @@ $app->post('/join', function (Request $request, Response $response, array $args)
             $router->pathFor('room:view', ['room' => $paddedRoom])
         );
 })->setName('room:join.post')->add($csrf);
+
+$app->post('/leave', function (Request $request, Response $response, array $args) {
+    /**
+     * @var \Slim\Router       $router
+     * @var \Slim\Http\Cookies $cookie
+     */
+    $router = $this->router;
+    $cookie = $this->cookie;
+
+    $cookie->set('room-number', [
+        'value' => '',
+        'expires' => time() - 3600,
+        'secure' => true,
+        'httponly' => true,
+        'path' => '/',
+        'host' => $request->getServerParam('SERVER_NAME'),
+    ]);
+
+    return $response
+        ->withHeader('Set-Cookie', $cookie->toHeaders())
+        ->withRedirect(
+            $router->pathFor('room:join')
+        );
+})->setName('room:leave.post')->add($csrf);

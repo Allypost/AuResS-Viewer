@@ -25,6 +25,11 @@
             {% endif %}
         {% endfor %}
     </ul>
+    <form action="{{ path_for("room:leave.post") }}" method="POST">
+        <h4 class="leave"><input type="submit" value="Leave room" name="leave" class="as-link"></h4>
+        <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
+        <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
+    </form>
     <div class="plot-container">
         <canvas id="plot"></canvas>
     </div>

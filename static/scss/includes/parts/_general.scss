@@ -20,7 +20,8 @@ html {
     font-size    : 1.2em;
 }
 
-a:not(.no-link-style) {
+a:not(.no-link-style),
+input.as-link {
     color      : $main-link;
     transition : color .3s #{$transition-smooth};
     @include link-underline($main-bg, $main-text, map-get($main-selection, 'background'));
